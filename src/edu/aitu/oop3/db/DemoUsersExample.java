@@ -9,7 +9,7 @@ public class DemoUsersExample {
         System.out.println("Demo: create table, insert, select");
         try (Connection connection = DatabaseConnection.getConnection()) {
             createTableIfNeeded(connection);
-            insertUser(connection, "Alice", "alice@example.com");
+            insertUser(connection, "Batyrkhan", "batyrkhan@example.com");
             insertUser(connection, "Bob", "bob@example.com");
             printAllUsers(connection);
         } catch (SQLException e) {
