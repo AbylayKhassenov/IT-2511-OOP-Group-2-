@@ -1,4 +1,6 @@
- public class Member {
+package entities;
+
+public class Member {
     private int id;
     private String name;
 
@@ -28,20 +30,20 @@
 
     public void setName(String name) {
         if (name == null || name.matches(".*\\d.*")) {
-            throw new IllegalArgumentException("Member name cannot contain numbers.");
+            throw new IllegalArgumentException("entities.Member name cannot contain numbers.");
         }
         this.name = name;
     }
 
      public void setEmail(String email) {
          if (email == null || !((email.matches(".*@\\w+\\." + "\\w+")))) {
-             throw new IllegalArgumentException("Member email format is incorrect.");
+             throw new IllegalArgumentException("entities.Member email format is incorrect.");
          }
          this.email = email;
      }
 
     @Override
     public String toString() {
-        return "Member{id=" + id + ", name= " + name + ", email " + email + "'} " ;
+        return "entities.Member{id=" + id + ", name= " + name + ", email " + email + "'} " ;
     }
 }

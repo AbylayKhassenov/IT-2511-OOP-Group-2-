@@ -1,3 +1,5 @@
+package entities;
+
 public class Book {
     private int id;
     private String title;
@@ -53,6 +55,6 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{id=" + id + ", name='" + title + "'}";
+        return "entities.Book{id=" + id + ", name='" + title + "'}";
     }
 }

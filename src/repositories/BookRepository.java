@@ -1,3 +1,7 @@
+package repositories;
+
+import entities.Book;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -114,10 +118,10 @@ public class BookRepository {
         return null;
     }
 
-    public  void borrowBook(Connection connection, String title) throws SQLException {
-        String sql = "update books set is_available = false where title = ? and is_available = true";
+    public  void borrowBook(Connection connection, int id) throws SQLException {
+        String sql = "update books set is_available = false where id = ? and is_available = true";
         try (PreparedStatement stmt = connection.prepareStatement(sql);) {
-            stmt.setString(1, title);
+            stmt.setInt(1, id);
             int booksAffected = stmt.executeUpdate();
 
 

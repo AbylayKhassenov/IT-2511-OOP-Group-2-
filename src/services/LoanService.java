@@ -1,8 +1,14 @@
+package services;
+
 import edu.aitu.oop3.db.DatabaseConnection;
+import entities.Book;
+import entities.Loan;
+import entities.Member;
+import repositories.BookRepository;
+import repositories.MemberRepository;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -65,10 +71,10 @@ public class LoanService {
                 bookRepository.borrowBook(connection, book.getId());
 
             }else {
-                throw new IllegalArgumentException("Member not found");
+                throw new IllegalArgumentException("entities.Member not found");
             }
         }else{
-            throw new IllegalArgumentException("Book not found or unavailable");
+            throw new IllegalArgumentException("entities.Book not found or unavailable");
         }
 
 
@@ -104,7 +110,7 @@ public class LoanService {
                 }
             }
         }else {
-            throw new IllegalArgumentException("Member not found");
+            throw new IllegalArgumentException("entities.Member not found");
         }
         throw new IllegalArgumentException("No such loan record!");
     }
