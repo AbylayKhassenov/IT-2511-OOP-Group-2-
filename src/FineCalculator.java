@@ -1,13 +1,9 @@
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 
 public class FineCalculator {
-
-
-
     public int loanFine(Loan loan, LocalDate returnDate){
 
             long returnDelay = ChronoUnit.DAYS.between(loan.getBorrowDate().plusDays(7), returnDate);
