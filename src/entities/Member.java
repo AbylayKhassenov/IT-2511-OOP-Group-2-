@@ -12,6 +12,11 @@ public class Member {
         setEmail(email);
     }
 
+    public Member(String name, String email) {
+        setName(name);
+        setEmail(email);
+    }
+
     public int getId() {
         return id;
     }
@@ -36,7 +41,7 @@ public class Member {
     }
 
      public void setEmail(String email) {
-         if (email == null || !((email.matches(".*@\\w+\\." + "\\w+")))) {
+         if (email == null || !((email.matches("\\w+@\\w+\\.\\w+")))) {
              throw new IllegalArgumentException("entities.Member email format is incorrect.");
          }
          this.email = email;

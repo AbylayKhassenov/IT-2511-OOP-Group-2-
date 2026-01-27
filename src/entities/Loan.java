@@ -64,6 +64,10 @@ public class Loan {
 
     private void setDueDate(LocalDate _dueDate) { dueDate = _dueDate;   }
 
+    @Override
+    public String toString() {  return "entities.Loan{" + "id=" + id + ", member=" + member.getName() + ", book=" + book.getTitle() + ", borrowed=" + borrowDate + ", returned=" + returnDate + ", fine=" + fine + '}';}
+
+
 
 
 
