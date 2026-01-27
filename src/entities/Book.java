@@ -15,6 +15,12 @@ public class Book {
 
     }
 
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+        this.isAvailable = true; // default for new books
+    }
+
     public int getId() {
         return id;
     }

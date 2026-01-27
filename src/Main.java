@@ -19,5 +19,7 @@ public class Main {
             System.out.println("Error while connecting to database:");
             e.printStackTrace();
         }
+
+        new LibraryApp().run();
     }
 }

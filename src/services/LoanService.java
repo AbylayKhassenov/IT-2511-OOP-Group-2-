@@ -89,6 +89,31 @@ public class LoanService {
         return memberRepository.findMemberById(connection, member.getId()) != null;
     }
 
+    public ArrayList<Loan> findMemberActiveLoan(Connection connection, Member member) throws SQLException{
+        ArrayList<Loan> loans = new ArrayList<>();
+        if( memberExist(connection, member)){
+            String sql = "select * from loans where member_id = ? and return_date is null";
+            try (PreparedStatement stmt = connection.prepareStatement(sql)){
+                stmt.setInt(1, member.getId());
+                try( ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        int bookId = rs.getInt("book_id");
+                        int memberId = rs.getInt("member_id");
+                        int loanId = rs.getInt("id");
+                        LocalDate borrowDate = rs.getObject("borrow_date", LocalDate.class);
+                        LocalDate returnDate = rs.getObject("return_date", LocalDate.class);
+                        int fine = rs.getInt("fine");
+                        loans.add(new Loan(loanId, memberRepository.findMemberById(connection, memberId), bookRepository.findBookById(connection, bookId), borrowDate, returnDate, fine)) ;
+                    }
+                    return loans;
+                }
+
+            }
+        }else {
+            throw new IllegalArgumentException("entities.Member not found");
+        }
+    }
+
     public Loan findActiveLoan(Connection connection, Member member, Book book) throws SQLException{
         if( memberExist(connection, member)){
             String sql = "select * from loans where book_id = ? and member_id = ? and return_date is null";
@@ -119,8 +144,6 @@ public class LoanService {
     public void returnProcess(Connection connection, Loan loan, LocalDate returnDate) throws  SQLException {
         int fine = fineCalculator.calculateFineSoFar(loan);
 
-
-
         String sql = "update loans set return_date = ? , fine = ?  where id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setDate(1, Date.valueOf(returnDate));
@@ -128,11 +151,9 @@ public class LoanService {
             stmt.setInt(3, loan.getId());
             int loanUpdate = stmt.executeUpdate();
 
-
         }
 
-
-        sql = "update books set available = true where id = ?";
+        sql = "update books set is_available = true where id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, loan.getBook().getId());
             int bookIsAvailable = stmt.executeUpdate();
