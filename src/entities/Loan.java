@@ -1,5 +1,7 @@
 package entities;
 
+import entities.book.Book;
+
 import java.time.LocalDate;
 
 

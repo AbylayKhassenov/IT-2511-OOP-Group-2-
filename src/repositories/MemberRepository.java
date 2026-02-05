@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-public class MemberRepository {
+public class MemberRepository implements CrudRepository<Member, Integer>{
     public static void main(String[] args) {
 
 
@@ -29,6 +29,20 @@ public class MemberRepository {
             System.out.println("Table members is ready.");
         }
     }
+
+    @Override
+    public void insert(Connection connection, Member member) {
+        try {
+            insertMember(
+                    connection,
+                    member.getName(),
+                    member.getEmail());
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error inserting member", e);
+        }
+    }
+
     public  void insertMember(Connection connection, String name, String email) throws SQLException {
        if(!emailExist(connection, email)) {
            String sql = "insert into members (name, email) values (?, ?) ";
@@ -65,6 +79,14 @@ public class MemberRepository {
         }
         return members;
     }
+    @Override
+    public List<Member> findAll(Connection connection) {
+        try {
+            return allMembers(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding members", e);
+        }
+    }
 
     public Member findMemberById(Connection connection, int id) throws SQLException {
         String sql = "select id, name, email from members where id = ?";
@@ -82,6 +104,15 @@ public class MemberRepository {
 
         }
         return null;
+    }
+
+    @Override
+    public Member findById(Connection connection, Integer id) {
+        try {
+            return findMemberById(connection, id);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding member by id", e);
+        }
     }
 
     public Member findMemberByEmail(Connection connection, String email) throws SQLException {

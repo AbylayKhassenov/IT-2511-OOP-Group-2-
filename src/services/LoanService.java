@@ -2,7 +2,7 @@ package services;
 
 import cfg.FinePolicy;
 import edu.aitu.oop3.db.DatabaseConnection;
-import entities.Book;
+import entities.book.Book;
 import entities.Loan;
 import entities.Member;
 import repositories.BookRepository;
@@ -34,7 +34,7 @@ public class LoanService {
  id serial primary key,
  book_id int not null,
      foreign key (book_id) references books (id),
- member_id int not null,
+         member_id int not null,
      foreign key (member_id) references members (id),
  borrow_date date not null,
  due_date date not null,
@@ -75,15 +75,12 @@ public class LoanService {
                 throw new IllegalArgumentException("entities.Member not found");
             }
         }else{
-            throw new IllegalArgumentException("entities.Book not found or unavailable");
+            throw new IllegalArgumentException("entities.book.Book not found or unavailable");
         }
-
-
     }
 
     public boolean bookExist(Connection connection, Book book) throws SQLException {
         return bookRepository.findBookById(connection, book.getId()) != null && (bookRepository.findBookById(connection, book.getId()).getAvailable());
-
     }
 
     public boolean memberExist(Connection connection, Member member) throws SQLException {
@@ -108,7 +105,6 @@ public class LoanService {
                     }
                     return loans;
                 }
-
             }
         }else {
             throw new IllegalArgumentException("entities.Member not found");
