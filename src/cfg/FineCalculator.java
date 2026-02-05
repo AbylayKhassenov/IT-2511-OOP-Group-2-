@@ -1,4 +1,4 @@
-package services;
+package cfg;
 
 import entities.Loan;
 
@@ -8,14 +8,14 @@ import java.time.temporal.ChronoUnit;
 public class FineCalculator {
     public int loanFine(Loan loan, LocalDate returnDate){
 
-            long returnDelay = ChronoUnit.DAYS.between(loan.getBorrowDate().plusDays(7), returnDate);
+        long returnDelay = ChronoUnit.DAYS.between(loan.getBorrowDate().plusDays(7), returnDate);
 
-            if (returnDelay>0) {
+        if (returnDelay>0) {
 
-                long bookFine = (returnDelay * 10000);
-                return Math.toIntExact(bookFine);
+            long bookFine = (returnDelay * 10000);
+            return Math.toIntExact(bookFine);
 
-            }
+        }
         return  0;
     }
 

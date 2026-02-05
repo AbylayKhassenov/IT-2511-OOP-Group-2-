@@ -1,5 +1,6 @@
 package services;
 
+import cfg.FinePolicy;
 import edu.aitu.oop3.db.DatabaseConnection;
 import entities.Book;
 import entities.Loan;
@@ -50,7 +51,7 @@ public class LoanService {
 
     private final BookRepository bookRepository = new BookRepository();
     private final MemberRepository memberRepository = new MemberRepository();
-    private final FineCalculator fineCalculator = new FineCalculator();
+    private final FinePolicy.FineCalculator fineCalculator = new FinePolicy.FineCalculator();
 
 
     public  void insertLoan(Connection connection, Member member, Book book) throws SQLException {
