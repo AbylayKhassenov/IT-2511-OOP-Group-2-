@@ -1,4 +1,4 @@
-import cfg.FinePolicy;
+import services.*;
 import edu.aitu.oop3.db.DatabaseConnection;
 import entities.book.Book;
 import repositories.*;
@@ -18,8 +18,7 @@ public class LibraryApp {
     private BookRepository bookRepo = new BookRepository();
     private MemberRepository memberRepo = new MemberRepository();
     private LoanService loanService = new LoanService();
-    private FinePolicy.FineCalculator fineCalculator =
-            new FinePolicy.FineCalculator();
+    private FineCalculator fineCalculator =  new FineCalculator();
 
     public void run() {
 

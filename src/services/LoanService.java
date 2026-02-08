@@ -51,7 +51,7 @@ public class LoanService {
 
     private final BookRepository bookRepository = new BookRepository();
     private final MemberRepository memberRepository = new MemberRepository();
-    private final FinePolicy.FineCalculator fineCalculator = new FinePolicy.FineCalculator();
+    private final FineCalculator fineCalculator = new FineCalculator();
 
 
     public  void insertLoan(Connection connection, Member member, Book book) throws SQLException {

@@ -23,4 +23,7 @@ public class FinePolicy {
     public int getMaxLoanDays() {
         return maxLoanDays;
     }
+
+    public class FineCalculator {
+    }
 }
