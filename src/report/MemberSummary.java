@@ -1,15 +1,18 @@
 package report;
 
 public class MemberSummary {
-
     private int memberId;
     private String name;
     private String email;
-    private int totalLoans;
     private int activeLoans;
+    private int totalFines;       // Новое поле
+    private String lastLoanData;  // Новое поле
 
     public MemberSummary() {
+
     }
+
+
     public void setMemberId(int memberId) {
         this.memberId = memberId;
     }
@@ -22,33 +25,27 @@ public class MemberSummary {
         this.email = email;
     }
 
-    public void setTotalLoans(int totalLoans) {
-        this.totalLoans = totalLoans;
-    }
-
     public void setActiveLoans(int activeLoans) {
         this.activeLoans = activeLoans;
     }
 
-    public int getMemberId() {
-        return memberId;
+    public void setTotalFines(int totalFines) {
+        this.totalFines = totalFines;
     }
 
-    public String getName() {
-        return name;
+    public void setLastLoanData(String lastLoanData) {
+        this.lastLoanData = lastLoanData;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public int getTotalLoans() {
-        return totalLoans;
-    }
 
-    public int getActiveLoans() {
-        return activeLoans;
+    public String Report() {
+        return  "Repotr on Member - ID: " + memberId + "\n" +
+                "Name: " + name + "\n" +
+                "Email: " + email + "\n" +
+                "Active Loans: " + activeLoans + "\n" +
+                "Total Fines: " + totalFines + " KZT\n" +
+                "Last Loan: " + (lastLoanData != null ? lastLoanData : "No active loans") + "\n" +
+                "Report Date: " + java.time.LocalDate.now();
     }
-
 }
-

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.List;
+import report.*;
 
 public class LibraryApp {
 
@@ -78,6 +79,10 @@ public class LibraryApp {
                     showActiveLoans(connection);
                     break;
 
+                case 8:
+                    exportMemberReport(connection);
+                    break;
+
                 case 0:
                     System.out.println("Goodbye.");
                     break;
@@ -106,6 +111,7 @@ public class LibraryApp {
         System.out.println("5. Borrow book");
         System.out.println("6. Return book");
         System.out.println("7. Show active loans");
+        System.out.println("8. Report on member");
         System.out.println("0. Exit");
         System.out.print("Choose (or type back): ");
     }
@@ -292,6 +298,46 @@ public class LibraryApp {
 
         } catch (Exception e) {
             System.out.println("Failed to load loans.");
+        }
+    }
+
+    private void exportMemberReport(Connection connection) {
+        System.out.print("Enter member ID: ");
+        String input = sc.nextLine();
+        if (input.equalsIgnoreCase("back")) return;
+
+        try {
+            int id = Integer.parseInt(input);
+            Member m = memberRepo.findById(connection, id);
+
+            if (m == null) {
+                System.out.println("Member not found.");
+                return;
+            }
+
+            // Получаем активные займы через твой LoanService
+            List<Loan> activeLoans = loanService.findMemberActiveLoan(connection, m);
+
+            // Использование Builder БЕЗ цепочки вызовов
+            Builder builder = new Builder();
+            builder.setMember(m);
+            builder.setLoans(activeLoans);
+
+            MemberSummary summary = builder.build();
+
+            // Запись в текстовый файл
+            String fileName = "summary_on_member_" + id + ".txt";
+            java.nio.file.Files.writeString(
+                    java.nio.file.Paths.get(fileName),
+                    summary.Report()
+            );
+
+            System.out.println("Report successfully exported to " + fileName);
+
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid ID format.");
+        } catch (Exception e) {
+            System.out.println("Error during export: " + e.getMessage());
         }
     }
 }
